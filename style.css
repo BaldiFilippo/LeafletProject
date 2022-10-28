@@ -15,6 +15,28 @@ main {
   display: flex;
 }
 
+li {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card {
+  width: 300px;
+  padding: 10px 20px;
+  transition: 0.5s;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.5s;
+  border-radius: 5px;
+}
+
 .earth-icon {
   position: absolute;
   right: 1%;
@@ -29,7 +51,10 @@ main {
   height: 50px;
   z-index: 999;
   cursor: pointer;
+  background: rgb(255, 255, 255);
+  border-radius: 50%;
 }
+
 .store-list {
   width: 40%;
   height: 100vh;
@@ -39,6 +64,10 @@ main {
   border-left: none;
   border-top: none;
 }
+
+.list-element {
+}
+
 #map {
   height: 100vh;
   width: 60%;
@@ -63,30 +92,29 @@ main {
   background: rgba(0, 0, 0, 0.1);
 }
 ::-webkit-scrollbar-thumb {
-  background: #333333;
+  background: #0d3b66;
   border-radius: 0;
 }
 .store-list ul.list {
   padding: 0 1rem;
   list-style-type: none;
 }
-.store-list .shop-item {
+.store-list .monument-item {
   margin: 1rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 1rem;
 }
-.store-list li:last-child .shop-item {
+.store-list li:last-child .monument-item {
   border: none;
 }
-.store-list .shop-item a {
+.store-list .monument-item a {
   text-decoration: none;
   font-size: 20px;
-  color: #333333;
+  color: #0d3b66;
   font-weight: 700;
 }
-.store-list .shop-item p {
+.store-list .monument-item p {
   font-size: 14px;
-  color: #404040;
+  color: #0d3b66;
 }
 .leaflet-popup-content-wrapper {
   padding: 0;
@@ -97,7 +125,7 @@ main {
 }
 .leaflet-popup-content-wrapper h4 {
   padding: 16px;
-  background: #333333;
+  background: #0d3b66;
   color: #fff;
   font-size: 16px;
 }
@@ -111,6 +139,21 @@ main {
   padding-top: 0;
 }
 .leaflet-popup-content-wrapper .leaflet-popup-content .phone-number a {
-  color: #333333;
+  color: #0d3b66;
   font-size: 14px;
+}
+
+.star {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  outline: none;
+}
+
+.star::selection {
+  background: none;
+}
+.star-active {
+  color: #0d3b66;
+  font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;
 }

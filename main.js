@@ -15,7 +15,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 function generateList() {
   const ul = document.querySelector('.list')
-  storeList.forEach((monument) => {
+  placesList.forEach((monument) => {
     const li = document.createElement('li')
     const div = document.createElement('div')
     const starDiv = document.createElement('div')
@@ -28,7 +28,6 @@ function generateList() {
     // </span>
 
     star.classList.add('material-symbols-outlined')
-
     star.classList.add('star')
     star.textContent = 'star'
 
@@ -36,8 +35,14 @@ function generateList() {
     starDiv.classList.add('star-div')
 
     a.addEventListener('click', () => {
-      flyToStore(monument)
+      console.log('click')
+      document.querySelectorAll('li').forEach((li) => {
+        li.classList.remove('active')
+      })
+      a.parentElement.parentElement.classList.add('active')
+      flyToplaces(monument)
     })
+
     div.classList.add('monument-item')
     a.innerText = monument.properties.name
     a.href = '#'
@@ -66,10 +71,7 @@ function makePopupContent(monument) {
   `
 }
 function onEachFeature(feature, layer) {
-  layer.bindPopup(makePopupContent(feature), {
-    closeButton: false,
-    offset: L.point(0, -8),
-  })
+  layer.bindPopup(makePopupContent(feature))
 }
 
 var myIcon = L.icon({
@@ -82,7 +84,7 @@ var favIcon = L.icon({
   iconSize: [30, 40],
 })
 
-const monumentsLayer = L.geoJSON(storeList, {
+const monumentsLayer = L.geoJSON(placesList, {
   onEachFeature: onEachFeature,
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, { icon: myIcon })
@@ -90,16 +92,16 @@ const monumentsLayer = L.geoJSON(storeList, {
 })
 monumentsLayer.addTo(myMap)
 
-function flyToStore(store) {
-  const lat = store.geometry.coordinates[1]
-  const lng = store.geometry.coordinates[0]
+function flyToplaces(places) {
+  const lat = places.geometry.coordinates[1]
+  const lng = places.geometry.coordinates[0]
   myMap.flyTo([lat, lng], 14, {
     duration: 3,
   })
   setTimeout(() => {
     L.popup({ closeButton: false, offset: L.point(0, -8) })
       .setLatLng([lat, lng])
-      .setContent(makePopupContent(store))
+      .setContent(makePopupContent(places))
       .openOn(myMap)
   }, 3000)
 }
@@ -109,6 +111,8 @@ const resetZoom = document.querySelector('.earth-icon')
 resetZoom.addEventListener('click', () => {
   myMap.setView([0, 0], 0)
 })
+
+//if i click on the marker i want to zoom the map to the marker
 
 const star = document.querySelectorAll('.star')
 
@@ -123,7 +127,7 @@ star.forEach((star) => {
 
       const monumentName = monumentLi.querySelector('a').innerText
 
-      const monument = storeList.find(
+      const monument = placesList.find(
         (monument) => monument.properties.name === monumentName
       )
 
@@ -140,7 +144,7 @@ star.forEach((star) => {
 
       const monumentName = monumentLi.querySelector('a').innerText
 
-      const monument = storeList.find(
+      const monument = placesList.find(
         (monument) => monument.properties.name === monumentName
       )
 
